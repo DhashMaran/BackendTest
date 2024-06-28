@@ -1,11 +1,13 @@
 var builder = WebApplication.CreateBuilder(args);
 
-
+// Add controller services
 builder.Services.AddControllers();
+
+// Configure the CORS for front end
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin",
-        builder => builder.WithOrigins("https://localhost:7147") 
+        builder => builder.WithOrigins("https://localhost:7147")
                           .AllowAnyMethod()
                           .AllowAnyHeader());
 });
@@ -23,14 +25,23 @@ else
     app.UseHsts();
 }
 
+
 app.UseHttpsRedirection();
+
+
 app.UseStaticFiles();
+
+
 app.UseRouting();
 
+// Apply CORS rules
 app.UseCors("AllowSpecificOrigin");
+
 
 app.UseAuthorization();
 
+
 app.MapControllers();
+
 
 app.Run();
